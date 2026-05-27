@@ -5,14 +5,13 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
+RUN pip install --no-cache-dir uv
+
 COPY pyproject.toml uv.lock ./
 
-RUN pip install uv
 RUN uv sync --frozen
 
 COPY . .
-
-RUN uv sync
 
 EXPOSE 8000
 

@@ -6,35 +6,53 @@ readme = "README.md"
 requires-python = ">=3.13"
 
 dependencies = [
+
+    # Django
     "Django>=5.2",
     "djangorestframework>=3.16",
     "django-environ>=0.12",
+    "django-cors-headers>=4.7",
+    "django-htmx>=1.23",
+    "django-filter>=25.1",
+    # Documentacion OpenAPI/Swagger
+    "drf-spectacular>=0.28",
 
+    # Database
     "psycopg[binary]>=3.2",
 
+    # Async / Queue
     "celery>=5.5",
     "redis>=6.0",
+    "flower>=2.0",
 
-    "gunicorn>=23.0",
-
-    "minio>=7.2",
-
+    # Storage / Files
     "pillow>=11.0",
+    "minio>=7.2",
+    "boto3>=1.38",
+    "django-storages>=1.14",
 
-    "django-cors-headers>=4.7",
-
+    # Deployment
+    "gunicorn>=23.0",
     "whitenoise>=6.9",
 
+    # Developer tools
     "ipython>=9.0",
 ]
 
 [dependency-groups]
+
 dev = [
+
+    # Formatting / Lint
+    "black>=25.1",
+    "ruff>=0.11",
+
+    # Testing
     "pytest>=8.3",
     "pytest-django>=4.11",
     "factory-boy>=3.3",
+    "model-bakery>=1.20",
 
-    "ruff>=0.11",
-
+    # Git hooks
     "pre-commit>=4.2",
 ]
