@@ -1,0 +1,40 @@
+[project]
+name = "odin"
+version = "0.1.0"
+description = "ERP de manufactura y producción"
+readme = "README.md"
+requires-python = ">=3.13"
+
+dependencies = [
+    "Django>=5.2",
+    "djangorestframework>=3.16",
+    "django-environ>=0.12",
+
+    "psycopg[binary]>=3.2",
+
+    "celery>=5.5",
+    "redis>=6.0",
+
+    "gunicorn>=23.0",
+
+    "minio>=7.2",
+
+    "pillow>=11.0",
+
+    "django-cors-headers>=4.7",
+
+    "whitenoise>=6.9",
+
+    "ipython>=9.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+    "pytest-django>=4.11",
+    "factory-boy>=3.3",
+
+    "ruff>=0.11",
+
+    "pre-commit>=4.2",
+]
