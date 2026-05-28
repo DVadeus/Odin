@@ -2,6 +2,7 @@ from pathlib import Path
 
 import environ
 
+# Configuración común
 
 # =========================
 # Paths
@@ -43,7 +44,9 @@ DJANGO_APPS = [
     "django.contrib.staticfiles",
 ]
 
-THIRD_PARTY_APPS = []
+THIRD_PARTY_APPS = [
+    "storages",
+]
 
 LOCAL_APPS = [
     "apps.core",
@@ -128,6 +131,70 @@ DATABASES = {
 
 
 # =========================
+# Cache Redis
+# =========================
+
+REDIS_URL = env(
+    "REDIS_URL",
+    default="redis://redis:6379"
+)
+
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": f"{REDIS_URL}/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+        
+    }
+}
+
+
+# =========================
+# MinIO / S3 Storage
+# =========================
+
+AWS_ACCESS_KEY_ID = env("MINIO_ACCESS_KEY")
+
+AWS_SECRET_ACCESS_KEY = env("MINIO_SECRET_KEY")
+
+AWS_STORAGE_BUCKET_NAME = env("MINIO_BUCKET_NAME")
+
+AWS_S3_ENDPOINT_URL = env("MINIO_ENDPOINT")
+
+AWS_S3_REGION_NAME = "us-east-1"
+
+AWS_S3_ADDRESSING_STYLE = "path"
+
+AWS_QUERYSTRING_AUTH = False
+
+AWS_DEFAULT_ACL = None
+
+# =========================
+# Django Storage
+# =========================
+
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3.S3Storage",
+    },
+
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
+
+# =========================
+# Celery Async
+# =========================
+
+CELERY_BROKER_URL = f"{REDIS_URL}/0"
+
+CELERY_RESULT_BACKEND = f"{REDIS_URL}/0"
+
+# =========================
 # Password validation
 # =========================
 
@@ -168,13 +235,18 @@ STATIC_URL = "/static/"
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
+# Fallback local
 MEDIA_URL = "/media/"
-
 MEDIA_ROOT = BASE_DIR / "media"
-
 
 # =========================
 # Default PK
 # =========================
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# =========================
+# Users
+# =========================
+
+AUTH_USER_MODEL = "users.User"

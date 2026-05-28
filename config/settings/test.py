@@ -1,5 +1,6 @@
 from .base import *
 
+# sqlite, mocks
 
 DEBUG = False
 

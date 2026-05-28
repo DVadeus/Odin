@@ -14,7 +14,7 @@ services:
       - "5432:5432"
 
   redis:
-    image: redis:8
+    image: redis:8-alpine
     container_name: odin_redis
     restart: unless-stopped
     ports:
@@ -40,7 +40,7 @@ services:
       dockerfile: docker/django/Dockerfile
     container_name: odin_django
     restart: unless-stopped
-    command: uv run python manage.py runserver 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app
     ports:
@@ -58,7 +58,7 @@ services:
       dockerfile: docker/django/Dockerfile
     container_name: odin_celery
     restart: unless-stopped
-    command: uv run celery -A config worker -l info
+    command: celery -A config worker -l info
     volumes:
       - .:/app
     env_file:
@@ -73,7 +73,7 @@ services:
       dockerfile: docker/django/Dockerfile
     container_name: odin_celery_beat
     restart: unless-stopped
-    command: uv run celery -A config beat -l info
+    command: celery -A config beat -l info
     volumes:
       - .:/app
     env_file:

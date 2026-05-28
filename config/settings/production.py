@@ -1,5 +1,6 @@
 from .base import *
 
+# Seguridad, S3, dominios
 
 DEBUG = False
 
