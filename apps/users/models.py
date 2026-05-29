@@ -25,10 +25,16 @@ class UserManager(BaseUserManager):
         return user
 
     def create_superuser(self, username, password=None, **extra_fields):
-
+        
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
         extra_fields.setdefault("is_active", True)
+
+        if extra_fields.get("is_staff") is not True:
+            raise ValueError("Superuser must have is_staff=True")
+
+        if extra_fields.get("is_superuser") is not True:
+            raise ValueError("Superuser must have is_superuser=True")
 
         return self.create_user(
             username,
@@ -51,7 +57,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         blank=True,
     )
 
-    id_company = models.IntegerField()
+    id_company = models.IntegerField(
+        null=True,
+        blank=True,
+    )
 
     username = models.CharField(
         max_length=50,
